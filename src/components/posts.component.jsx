@@ -7,12 +7,12 @@ class Posts extends Component {
     super();
     this.state={
     comments:[],
-    currentPage:1,
-    postsPerPage:20,
+    currentPage:2,
+    postsPerPage:10,
     }
   }
      componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/comments')
+        axios.get('https://jsonplaceholder.typicode.com/albums')
         .then(comments => this.setState({
           comments: comments.data,
         }));
@@ -27,12 +27,11 @@ class Posts extends Component {
   var indexOfFirstComment = indexOfLastComment - postsPerPage;
   var currentComments = this.state.comments.slice(indexOfFirstComment, indexOfLastComment);
    return (
-
      <div>
        {currentComments.map(comment => {
-         return <h1>{comment.name}</h1>
+         return <h1>{comment.title}</h1>
        })}
-       <PaginationPosts changePage={(el)=>this.changePage(el)} postsPerPage={postsPerPage} totalPosts={this.state.comments.length}></PaginationPosts>
+       <PaginationPosts currentPage={this.state.currentPage} changePage={(el)=>this.setState({currentPage:el})} postsPerPage={postsPerPage} totalPosts={this.state.comments.length}></PaginationPosts>
      </div>
    )
  }
